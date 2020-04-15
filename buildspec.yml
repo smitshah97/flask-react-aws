@@ -1,0 +1,43 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: "ap-south-1"
+    REACT_APP_USERS_SERVICE_URL: "http://localhost:5001"
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - echo logging in to ecr...
+      - $(aws ecr get-login --no-include-email --region ap-south-1)
+  build:
+    commands:
+      - echo building and testing dev images...
+      - docker-compose up -d --build
+      - docker-compose exec -T users python -m pytest "project/tests" -p no:warnings --cov="project"
+      - docker-compose exec -T users flake8 project
+      - docker-compose exec -T users black project --check
+      - docker-compose exec -T users /bin/sh -c "isort project/*/*.py --check-only"
+      - docker-compose exec -T client npm run lint
+      - docker-compose exec -T client npm run prettier:check
+      - docker-compose exec -T client npm run prettier:write
+      - echo building prod images...
+      - >
+        docker build \
+          -f services/users/Dockerfile.prod \
+          -t 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-users:prod \
+          ./services/users
+      - >
+        docker build \
+          -f services/client/Dockerfile.prod \
+          -t 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod \
+          --build-arg NODE_ENV=production \
+          --build-arg REACT_APP_USERS_SERVICE_URL=$REACT_APP_USERS_SERVICE_URL \
+          ./services/client
+  post_build:
+    commands:
+    - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-users:prod
+    - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod
