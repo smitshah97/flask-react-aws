@@ -13,6 +13,7 @@ phases:
     commands:
       - echo logging in to ecr...
       - $(aws ecr get-login --no-include-email --region ap-south-1)
+      - pip install --no-cache-dir docker-compose==1.12.0
   build:
     commands:
       - echo building images...
