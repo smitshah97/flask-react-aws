@@ -15,16 +15,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region ap-south-1)
   build:
     commands:
-      - echo building and testing dev images...
-      - docker-compose up -d --build
-      - docker-compose exec -T users python -m pytest "project/tests" -p no:warnings --cov="project"
-      - docker-compose exec -T users flake8 project
-      - docker-compose exec -T users black project --check
-      - docker-compose exec -T users /bin/sh -c "isort project/*/*.py --check-only"
-      - docker-compose exec -T client npm run lint
-      - docker-compose exec -T client npm run prettier:check
-      - docker-compose exec -T client npm run prettier:write
-      - echo building prod images...
+      - echo building images...
       - >
         docker build \
           -f services/users/Dockerfile.prod \
@@ -39,6 +30,5 @@ phases:
           ./services/client
   post_build:
     commands:
-    - echo pushing prod images to ecr...
     - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-users:prod
     - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod
