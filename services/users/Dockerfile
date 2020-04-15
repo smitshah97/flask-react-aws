@@ -22,7 +22,7 @@ COPY ./requirements-dev.txt /usr/src/app/requirements-dev.txt
 RUN pip install -r requirements-dev.txt
 
 
-ENTRYPOINT ["sh", "/usr/src/app/entrypoint.sh"]
+ENTRYPOINT sh /usr/src/app/entrypoint.sh
 
 
 # add entrypoint.sh
