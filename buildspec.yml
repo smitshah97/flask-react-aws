@@ -9,13 +9,21 @@ phases:
   install:
     runtime-versions:
       docker: 18
+<<<<<<< HEAD
+=======
+    
+>>>>>>> b4a9e95ab1bb61d03d157425624db651fd6a0014
   pre_build:
     commands:
       - echo logging in to ecr...
       - $(aws ecr get-login --no-include-email --region ap-south-1)
   build:
     commands:
+<<<<<<< HEAD
       - echo building and testing dev images...
+=======
+      - echo building images...
+>>>>>>> b4a9e95ab1bb61d03d157425624db651fd6a0014
       - docker-compose up -d --build
       - docker-compose exec -T users python -m pytest "project/tests" -p no:warnings --cov="project"
       - docker-compose exec -T users flake8 project
@@ -40,4 +48,8 @@ phases:
   post_build:
     commands:
     - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-users:prod
+<<<<<<< HEAD
     - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod
+=======
+    - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod
+>>>>>>> b4a9e95ab1bb61d03d157425624db651fd6a0014
