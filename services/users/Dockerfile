@@ -21,6 +21,10 @@ COPY ./requirements.txt /usr/src/app/requirements.txt
 COPY ./requirements-dev.txt /usr/src/app/requirements-dev.txt
 RUN pip install -r requirements-dev.txt
 
+
+ENTRYPOINT ["sh", "/usr/src/app/entrypoint.sh"]
+
+
 # add entrypoint.sh
 COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
