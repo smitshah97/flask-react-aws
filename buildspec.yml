@@ -40,6 +40,6 @@ phases:
   post_build:
     commands:
     - echo pushing prod images to ecr...
-	- docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod
+    - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-client:prod
     - docker push 771513926180.dkr.ecr.ap-south-1.amazonaws.com/test-driven-users:prod
     
