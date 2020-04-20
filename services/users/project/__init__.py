@@ -8,28 +8,13 @@ from flask_admin import Admin
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
-from flask import Blueprint, jsonify, request, redirect
 
-#from . import db 
-#from .models import Movie
-from flask_cors import cross_origin
 
 # instantiate the extensions
 db = SQLAlchemy()
 cors = CORS()
 bcrypt = Bcrypt()
 admin = Admin(template_mode="bootstrap3")
-main = Flask(__name__)
-main.before_request(bind_request_params)
-
-cors = CORS(main)
-main.config['CORS_HEADERS'] = 'Content-Type'
-
-
-@main.route('/sample', methods=['GET'])
-def sampleawstest():
-    
-    return jsonify({'movies' : "SAMPLE TEST"})
 
 
 def create_app(script_info=None):
