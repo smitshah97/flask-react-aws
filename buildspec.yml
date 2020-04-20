@@ -20,7 +20,6 @@ phases:
     commands:
       - echo building and testing dev images...
       - docker-compose up -d --build
-      - docker-compose exec -T users python -m pytest "project/tests" -p no:warnings --cov="project"
       - docker-compose exec -T users flake8 project
       - docker-compose exec -T users /bin/sh -c "isort project/*/*.py --check-only"
       - docker-compose exec -T client npm run lint
