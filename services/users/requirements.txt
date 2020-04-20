@@ -75,4 +75,3 @@ zipp==3.1.0
 gunicorn==20.0.4
 psycopg2-binary==2.8.4
 pyjwt==1.7.1
-werkzeug==0.16.1
