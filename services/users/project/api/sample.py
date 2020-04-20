@@ -8,7 +8,7 @@ sample_namespace = Namespace("sample")
 
 class Sample(Resource):
     def get(self):
-        return {"SAMPLE": "TEST", "message": "AWS!"}
+        return {"status": "success", "message": "pong!"}
 
 
 sample_namespace.add_resource(Sample, "")
